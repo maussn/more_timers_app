@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
             currentPageIndex = index;
           });
         },
-        destinations: [
+        destinations: const <Widget>[
           NavigationDestination(
             icon: Icon(Icons.access_alarm),
             label: 'Stopwatchs'
@@ -61,7 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      body: Placeholder(),
+      body: 
+        <Widget>[
+        Card(child: Text('Timers'),),
+        Card(child: Text('Stopwatches'))
+      ][currentPageIndex],
     );
   }
 }
