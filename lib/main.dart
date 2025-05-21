@@ -1,4 +1,7 @@
+// import 'dart:async';
+
 import 'package:flutter/material.dart';
+// import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MoreTimersApp());
@@ -6,12 +9,10 @@ void main() {
 
 class MoreTimersApp extends StatelessWidget {
   const MoreTimersApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'More Timers',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
       ),
@@ -19,6 +20,20 @@ class MoreTimersApp extends StatelessWidget {
     );
   }
 }
+
+// class AppState extends ChangeNotifier {
+//   // ignore: prefer_typing_uninitialized_variables
+//   var currentTimer;
+
+//   void setTimer(Duration duration) {
+//     currentTimer = Timer(duration, handleTimeout);
+//   }
+
+//   void handleTimeout() {
+
+//   }
+// }
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -31,16 +46,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Widget page;
-    // switch (currentPageIndex) {
-    //   case 0:
-    //     page = Placeholder();
-    //   case 1:
-    //     page = Placeholder();
-    //   default:
-    //     throw UnimplementedError('no widget for $currentPageIndex');
-    // }
-
+    Widget page;
+    switch (currentPageIndex) {
+      case 0:
+        page = Card(child: Text('Stopwatches'));
+      case 1:
+        page = TimersPage();
+      default:
+        throw UnimplementedError('no widget for $currentPageIndex');
+    }
 
     return Scaffold(
       bottomNavigationBar: NavigationBar(
@@ -53,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
         destinations: const <Widget>[
           NavigationDestination(
             icon: Icon(Icons.access_alarm),
-            label: 'Stopwatchs'
+            label: 'Stopwatches'
           ),
           NavigationDestination(
             icon: Icon(Icons.av_timer), 
@@ -61,11 +75,35 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      body: 
-        <Widget>[
-        Card(child: Text('Timers'),),
-        Card(child: Text('Stopwatches'))
-      ][currentPageIndex],
+      body: page,
+    );
+  }
+}
+
+
+// class TimerField extends StatelessWidget {
+//   final Timer timer;
+//   const TimerField({super.key, required this.timer});
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       decoration: BoxDecoration(
+//         border: Border(bottom: BorderSide(color: Theme.of(context).dividerColor))
+//       ),
+//       child: Text('Should be a timer'),
+//     );
+//   }
+// }
+
+
+class TimersPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        Text('test1'),
+        Text('test2')
+      ],
     );
   }
 }
