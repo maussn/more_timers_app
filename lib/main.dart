@@ -1,6 +1,9 @@
 // import 'dart:async';
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
 
 void main() {
@@ -11,28 +14,27 @@ class MoreTimersApp extends StatelessWidget {
   const MoreTimersApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'More Timers',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
+    return ChangeNotifierProvider(
+      create: (context) => AppState(),
+      child: MaterialApp(
+        title: 'More Timers',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
+        ),
+        home: MyHomePage(),
       ),
-      home: MyHomePage(),
     );
   }
 }
 
-// class AppState extends ChangeNotifier {
-//   // ignore: prefer_typing_uninitialized_variables
-//   var currentTimer;
+class AppState extends ChangeNotifier {
+  final List<String> entries = <String>[];
 
-//   void setTimer(Duration duration) {
-//     currentTimer = Timer(duration, handleTimeout);
-//   }
-
-//   void handleTimeout() {
-
-//   }
-// }
+  void addEntry(int index) {
+    entries.add('$index');
+    notifyListeners();
+  }
+}
 
 
 class MyHomePage extends StatefulWidget {
@@ -81,29 +83,41 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 
-// class TimerField extends StatelessWidget {
-//   final Timer timer;
-//   const TimerField({super.key, required this.timer});
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: BoxDecoration(
-//         border: Border(bottom: BorderSide(color: Theme.of(context).dividerColor))
-//       ),
-//       child: Text('Should be a timer'),
-//     );
-//   }
-// }
-
 
 class TimersPage extends StatelessWidget {
+  const TimersPage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Text('test1'),
-        Text('test2')
-      ],
+    var appState = context.watch<AppState>();
+    ScrollController _myController = ScrollController();
+    Timer(Duration(milliseconds: 500), () => _myController.jumpTo(_myController.position.maxScrollExtent));
+    return Container(
+      padding: EdgeInsets.only(top: 16),
+      child: ListView.separated(
+        padding: const EdgeInsets.all(8),
+        controller: _myController,
+        itemCount: appState.entries.length == null ? 1 : appState.entries.length + 1,
+        itemBuilder: (BuildContext context, int index) {
+          if (index < appState.entries.length) {
+            return Container(
+              height: 50,
+              color: Colors.amber,
+              child: Center(child: Text('Entry ${appState.entries[index]}')),
+            );
+          }
+          return Center(
+            child: IconButton(
+              onPressed: () {
+                appState.addEntry(index);
+                _myController.jumpTo(_myController.position.maxScrollExtent);
+              },
+              icon: Icon(Icons.add_circle),
+            ),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+      ),
     );
   }
 }
