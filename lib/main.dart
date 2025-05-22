@@ -1,6 +1,7 @@
 // import 'dart:async';
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +33,11 @@ class _AppState extends ChangeNotifier {
 
   void addEntry(int index) {
     entries.add('$index');
+    notifyListeners();
+  }
+
+  void removeEntry(int index) {
+    entries.removeAt(index);
     notifyListeners();
   }
 }
@@ -91,7 +97,6 @@ class TimersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<_AppState>();
     ScrollController myController = ScrollController();
-    Timer(Duration(milliseconds: 500), () => myController.jumpTo(myController.position.maxScrollExtent));
     return Container(
       padding: EdgeInsets.only(top: 16),
       child: ListView.separated(
@@ -106,9 +111,9 @@ class TimersPage extends StatelessWidget {
               color: Colors.amber,
               child: Row(
                 children: [
-                  Expanded(child: Align(alignment: Alignment.centerLeft, child: Text('Entry $index'))),
+                  Expanded(child: Align(alignment: Alignment.centerLeft, child: Text('Entry ${appState.entries[index]}'))),
                   Icon(Icons.play_arrow),
-                  Icon(Icons.highlight_remove)
+                  IconButton(onPressed: () {appState.removeEntry(index);}, icon: Icon(Icons.highlight_remove))
 
                 ],
               ),
