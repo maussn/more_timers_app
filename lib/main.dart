@@ -95,15 +95,23 @@ class TimersPage extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 16),
       child: ListView.separated(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(10),
         controller: myController,
         itemCount: appState.entries.length + 1,
         itemBuilder: (BuildContext context, int index) {
           if (index < appState.entries.length) {
             return Container(
               height: 50,
+              padding: EdgeInsets.all(10),
               color: Colors.amber,
-              child: Center(child: Text('Entry ${appState.entries[index]}')),
+              child: Row(
+                children: [
+                  Expanded(child: Align(alignment: Alignment.centerLeft, child: Text('Entry $index'))),
+                  Icon(Icons.play_arrow),
+                  Icon(Icons.highlight_remove)
+
+                ],
+              ),
             );
           }
           return Center(
