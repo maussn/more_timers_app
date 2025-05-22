@@ -15,7 +15,7 @@ class MoreTimersApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => AppState(),
+      create: (context) => _AppState(),
       child: MaterialApp(
         title: 'More Timers',
         theme: ThemeData(
@@ -27,7 +27,7 @@ class MoreTimersApp extends StatelessWidget {
   }
 }
 
-class AppState extends ChangeNotifier {
+class _AppState extends ChangeNotifier {
   final List<String> entries = <String>[];
 
   void addEntry(int index) {
@@ -89,7 +89,7 @@ class TimersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<AppState>();
+    var appState = context.watch<_AppState>();
     ScrollController _myController = ScrollController();
     Timer(Duration(milliseconds: 500), () => _myController.jumpTo(_myController.position.maxScrollExtent));
     return Container(
