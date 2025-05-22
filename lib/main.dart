@@ -90,14 +90,14 @@ class TimersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<_AppState>();
-    ScrollController _myController = ScrollController();
-    Timer(Duration(milliseconds: 500), () => _myController.jumpTo(_myController.position.maxScrollExtent));
+    ScrollController myController = ScrollController();
+    Timer(Duration(milliseconds: 500), () => myController.jumpTo(myController.position.maxScrollExtent));
     return Container(
       padding: EdgeInsets.only(top: 16),
       child: ListView.separated(
         padding: const EdgeInsets.all(8),
-        controller: _myController,
-        itemCount: appState.entries.length == null ? 1 : appState.entries.length + 1,
+        controller: myController,
+        itemCount: appState.entries.length + 1,
         itemBuilder: (BuildContext context, int index) {
           if (index < appState.entries.length) {
             return Container(
@@ -110,7 +110,7 @@ class TimersPage extends StatelessWidget {
             child: IconButton(
               onPressed: () {
                 appState.addEntry(index);
-                _myController.jumpTo(_myController.position.maxScrollExtent);
+                myController.jumpTo(myController.position.maxScrollExtent);
               },
               icon: Icon(Icons.add_circle),
             ),
