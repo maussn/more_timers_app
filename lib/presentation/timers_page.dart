@@ -34,6 +34,7 @@ class TimersPage extends StatelessWidget {
                     onPressed: () {
                       appState.entries[index].startTimer();
                     },
+                    padding: EdgeInsets.zero,
                     icon: Icon(Icons.play_arrow),
                   ),
 
