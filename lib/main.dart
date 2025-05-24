@@ -18,11 +18,12 @@ class TimeData {
 
   void startTimer() {
     active = true;
-    print('Timer set to active');
+    print('Timer set to active: ${duration.toString()}');
   }
 
   void decrement() {
-    duration - updateInterval;
+    duration = duration - updateInterval;
+    print('Timer decremented: ${duration.toString()}');
     if (duration <= Duration.zero) {
       active = false;
       activateAlarm();
@@ -83,6 +84,10 @@ class _AppState extends ChangeNotifier {
         notifyListeners();
       }
     );
+  }
+
+  String getString(int index) {
+    return entries[index].getString();
   }
 
   @override
@@ -164,10 +169,20 @@ class TimersPage extends StatelessWidget {
               color: Colors.amber,
               child: Row(
                 children: [
-                  Expanded(child: Align(alignment: Alignment.centerLeft, child: Text(appState.entries[index].getString()))),
-                  IconButton(onPressed: () {appState.entries[index].startTimer();}, icon: Icon(Icons.play_arrow)),
-                  // IconButton(onPressed: () {appState.(index);}, icon: Icon(Icons.highlight_remove))
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(appState.getString(index)),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      appState.entries[index].startTimer();
+                    },
+                    icon: Icon(Icons.play_arrow),
+                  ),
 
+                  // IconButton(onPressed: () {appState.(index);}, icon: Icon(Icons.highlight_remove))
                 ],
               ),
             );
