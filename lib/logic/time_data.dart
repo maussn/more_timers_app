@@ -10,6 +10,10 @@ class TimeData {
     print('Timer set to active: ${duration.toString()}');
   }
 
+  void pause() {
+    active = false;
+  }
+
   void decrement(Duration updateInterval) {
     duration = duration - updateInterval;
     print('Timer decremented: ${duration.toString()}');

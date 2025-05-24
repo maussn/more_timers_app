@@ -18,6 +18,11 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void pause(int index) {
+    entries[index].pause();
+    notifyListeners();
+  }
+
   void startTimerUpdater() {
     _timerUpdater = Timer.periodic(
       updateInterval,
