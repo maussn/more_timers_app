@@ -31,14 +31,38 @@ class TimersPage extends StatelessWidget {
                     ),
                   ),
                   if (appState.entries[index].active) ...[
-                    IconButton(onPressed: () {appState.pauseTimer(index);}, icon: Icon(Icons.pause_circle_outline), padding: EdgeInsets.zero)
+                    IconButton(
+                      onPressed: () {
+                        appState.pauseTimer(index);
+                      },
+                      icon: Icon(Icons.pause_circle_outline_sharp),
+                      padding: EdgeInsets.zero,
+                    ),
                   ] else ...[
-                    IconButton(onPressed: () {appState.removeTimer(index);}, icon: Icon(Icons.highlight_remove), padding: EdgeInsets.zero),
+                    IconButton(
+                      onPressed: () {
+                        appState.removeTimer(index);
+                      },
+                      icon: Icon(Icons.highlight_remove),
+                      padding: EdgeInsets.zero,
+                    ),
                     if (appState.entries[index].finished) ...[
-                      IconButton(onPressed: () {appState.restartTimer(index);}, icon: Icon(Icons.restore_outlined), padding: EdgeInsets.zero)
+                      IconButton(
+                        onPressed: () {
+                          appState.restartTimer(index);
+                        },
+                        icon: Icon(Icons.replay_circle_filled_sharp),
+                        padding: EdgeInsets.zero,
+                      ),
                     ] else ...[
-                      IconButton(onPressed: () {appState.startTimer(index);}, icon: Icon(Icons.play_circle), padding: EdgeInsets.zero)
-                    ]
+                      IconButton(
+                        onPressed: () {
+                          appState.startTimer(index);
+                        },
+                        icon: Icon(Icons.play_circle),
+                        padding: EdgeInsets.zero,
+                      ),
+                    ],
                   ]
                 ],
               ),
