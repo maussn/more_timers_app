@@ -50,7 +50,7 @@ class MoreTimersApp extends StatelessWidget {
       child: MaterialApp(
         title: 'More Timers',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
+          colorScheme: ColorScheme.dark(),
         ),
         home: MyHomePage(),
       ),
@@ -149,6 +149,7 @@ class TimersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     var appState = context.watch<_AppState>();
     ScrollController myController = ScrollController();
     return Container(
@@ -162,7 +163,7 @@ class TimersPage extends StatelessWidget {
             return Container(
               height: 50,
               padding: EdgeInsets.all(10),
-              color: Colors.amber,
+              color: theme.colorScheme.onPrimaryContainer,
               child: Row(
                 children: [
                   Expanded(
