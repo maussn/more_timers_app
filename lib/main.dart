@@ -1,11 +1,40 @@
-// import 'dart:async';
-
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:provider/provider.dart';
+
+const updateInterval = Duration(seconds: 1);
+
+void activateAlarm() {
+  print('Alarm goes off!');
+}
+
+
+class TimeData {
+  var active = false;
+  Duration duration;
+
+  TimeData(this.duration);
+
+  void startTimer() {
+    active = true;
+    print('Timer set to active');
+  }
+
+  void decrement() {
+    duration - updateInterval;
+    if (duration <= Duration.zero) {
+      active = false;
+      activateAlarm();
+    }
+  }
+
+  String getString() {
+    String str = duration.toString();
+    return str.substring(0, str.length - 7);
+  }
+}
+
 
 void main() {
   runApp(const MoreTimersApp());
@@ -29,16 +58,41 @@ class MoreTimersApp extends StatelessWidget {
 }
 
 class _AppState extends ChangeNotifier {
-  final List<String> entries = <String>[];
+  final List<TimeData> entries = <TimeData>[];
+  late Timer _timerUpdater;
 
-  void addEntry(int index) {
-    entries.add('$index');
+  void addTimer(Duration duration) {
+    entries.add(TimeData(duration));
     notifyListeners();
   }
 
-  void removeEntry(int index) {
-    entries.removeAt(index);
+  void startTimer(int index) {
+    entries[index].startTimer();
     notifyListeners();
+  }
+
+  void startTimerUpdater() {
+    _timerUpdater = Timer.periodic(
+      updateInterval,
+      (Timer timer) {
+        for (var entry in entries) {
+          if (entry.active) {
+            entry.decrement();
+          }
+        }
+        notifyListeners();
+      }
+    );
+  }
+
+  @override
+  void dispose() {
+    _timerUpdater.cancel();
+    super.dispose();
+  }
+
+  _AppState() {
+    startTimerUpdater();
   }
 }
 
@@ -89,7 +143,6 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 
-
 class TimersPage extends StatelessWidget {
   const TimersPage({super.key});
 
@@ -111,9 +164,9 @@ class TimersPage extends StatelessWidget {
               color: Colors.amber,
               child: Row(
                 children: [
-                  Expanded(child: Align(alignment: Alignment.centerLeft, child: Text('Entry ${appState.entries[index]}'))),
-                  Icon(Icons.play_arrow),
-                  IconButton(onPressed: () {appState.removeEntry(index);}, icon: Icon(Icons.highlight_remove))
+                  Expanded(child: Align(alignment: Alignment.centerLeft, child: Text(appState.entries[index].getString()))),
+                  IconButton(onPressed: () {appState.entries[index].startTimer();}, icon: Icon(Icons.play_arrow)),
+                  // IconButton(onPressed: () {appState.(index);}, icon: Icon(Icons.highlight_remove))
 
                 ],
               ),
@@ -122,7 +175,7 @@ class TimersPage extends StatelessWidget {
           return Center(
             child: IconButton(
               onPressed: () {
-                appState.addEntry(index);
+                appState.addTimer(Duration(seconds: 5));
                 myController.jumpTo(myController.position.maxScrollExtent);
               },
               icon: Icon(Icons.add_circle),
