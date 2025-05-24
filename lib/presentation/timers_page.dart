@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:more_timers_app/logic/app_state.dart';
+import 'package:provider/provider.dart';
+
+class TimersPage extends StatelessWidget {
+  const TimersPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    var appState = context.watch<AppState>();
+    ScrollController myController = ScrollController();
+    return Container(
+      padding: EdgeInsets.only(top: 16),
+      child: ListView.separated(
+        padding: const EdgeInsets.all(10),
+        controller: myController,
+        itemCount: appState.entries.length + 1,
+        itemBuilder: (BuildContext context, int index) {
+          if (index < appState.entries.length) {
+            return Container(
+              height: 50,
+              padding: EdgeInsets.all(10),
+              color: theme.colorScheme.onPrimaryContainer,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(appState.entries[index].getString()),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      appState.entries[index].startTimer();
+                    },
+                    icon: Icon(Icons.play_arrow),
+                  ),
+
+                  // IconButton(onPressed: () {appState.(index);}, icon: Icon(Icons.highlight_remove))
+                ],
+              ),
+            );
+          }
+          return Center(
+            child: IconButton(
+              onPressed: () {
+                appState.addTimer(Duration(seconds: 5));
+                myController.jumpTo(myController.position.maxScrollExtent);
+              },
+              icon: Icon(Icons.add_circle),
+            ),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+      ),
+    );
+  }
+}
