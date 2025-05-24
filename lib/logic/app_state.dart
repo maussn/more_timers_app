@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:more_timers_app/logic/time_data.dart';
-import 'package:more_timers_app/main.dart';
 
 
 class AppState extends ChangeNotifier {
+  static const updateInterval = Duration(seconds: 1);
   final List<TimeData> entries = <TimeData>[];
   late Timer _timerUpdater;
 
@@ -24,7 +24,7 @@ class AppState extends ChangeNotifier {
       (Timer timer) {
         for (var entry in entries) {
           if (entry.active) {
-            entry.decrement();
+            entry.decrement(updateInterval);
           }
         }
         notifyListeners();

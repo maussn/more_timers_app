@@ -1,16 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:more_timers_app/logic/app_state.dart';
 import 'package:more_timers_app/presentation/timers_page.dart';
 import 'package:provider/provider.dart';
-
-const updateInterval = Duration(seconds: 1);
-
-void activateAlarm() {
-  print('Alarm goes off!');
-}
-
 
 void main() {
   runApp(const MoreTimersApp());
