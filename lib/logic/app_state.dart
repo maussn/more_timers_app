@@ -23,6 +23,11 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeTimer(int index) {
+    entries.removeAt(index);
+    notifyListeners();
+  }
+
   void startTimerUpdater() {
     _timerUpdater = Timer.periodic(
       updateInterval,

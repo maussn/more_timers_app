@@ -33,6 +33,7 @@ class TimersPage extends StatelessWidget {
                   if (appState.entries[index].active) ...[
                     IconButton(onPressed: () {appState.pauseTimer(index);}, icon: Icon(Icons.pause_circle_outline), padding: EdgeInsets.zero)
                   ] else ...[
+                    IconButton(onPressed: () {appState.removeTimer(index);}, icon: Icon(Icons.highlight_remove), padding: EdgeInsets.zero),
                     IconButton(onPressed: () {appState.startTimer(index);}, icon: Icon(Icons.play_circle), padding: EdgeInsets.zero)
                   ]
                 ],
