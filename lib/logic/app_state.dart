@@ -14,11 +14,11 @@ class AppState extends ChangeNotifier {
   }
 
   void startTimer(int index) {
-    entries[index].startTimer();
+    entries[index].start();
     notifyListeners();
   }
 
-  void pause(int index) {
+  void pauseTimer(int index) {
     entries[index].pause();
     notifyListeners();
   }

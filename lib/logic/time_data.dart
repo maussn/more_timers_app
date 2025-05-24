@@ -5,7 +5,7 @@ class TimeData {
 
   TimeData(this.duration);
 
-  void startTimer() {
+  void start() {
     active = true;
     print('Timer set to active: ${duration.toString()}');
   }
