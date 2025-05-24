@@ -1,9 +1,13 @@
 
 class TimeData {
   var active = false;
-  Duration duration;
+  var finished = false;
+  late Duration duration;
+  final Duration initialDuration;
 
-  TimeData(this.duration);
+  TimeData(this.initialDuration) {
+    duration = initialDuration;
+  }
 
   void start() {
     active = true;
@@ -14,11 +18,18 @@ class TimeData {
     active = false;
   }
 
+  void restart() {
+    duration = initialDuration;
+    finished = false;
+    active = true;
+  }
+
   void decrement(Duration updateInterval) {
     duration = duration - updateInterval;
     print('Timer decremented: ${duration.toString()}');
     if (duration <= Duration.zero) {
       active = false;
+      finished = true;
       activateAlarm();
     }
   }

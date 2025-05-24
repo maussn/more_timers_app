@@ -23,6 +23,11 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void restartTimer(int index) {
+    entries[index].restart();
+    notifyListeners();
+  }
+
   void removeTimer(int index) {
     entries.removeAt(index);
     notifyListeners();
