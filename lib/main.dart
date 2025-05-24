@@ -86,10 +86,6 @@ class _AppState extends ChangeNotifier {
     );
   }
 
-  String getString(int index) {
-    return entries[index].getString();
-  }
-
   @override
   void dispose() {
     _timerUpdater.cancel();
@@ -172,7 +168,7 @@ class TimersPage extends StatelessWidget {
                   Expanded(
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(appState.getString(index)),
+                      child: Text(appState.entries[index].getString()),
                     ),
                   ),
                   IconButton(
