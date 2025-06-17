@@ -12,7 +12,7 @@ class TimersPage extends StatelessWidget {
     var appState = context.watch<AppState>();
     ScrollController myController = ScrollController();
     return Container(
-      padding: EdgeInsets.only(top: 16),
+      padding: EdgeInsets.only(top: 30),
       child: ListView.separated(
         padding: const EdgeInsets.all(10),
         controller: myController,
@@ -20,7 +20,7 @@ class TimersPage extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           if (index < appState.entries.length) {
             return Container(
-              height: 50,
+              height: 100,
               padding: EdgeInsets.all(10),
               color: theme.colorScheme.onPrimaryContainer,
               child: Row(
@@ -28,7 +28,7 @@ class TimersPage extends StatelessWidget {
                   Expanded(
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(appState.entries[index].getString()),
+                      child: Text(appState.entries[index].getString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),),
                     ),
                   ),
                   if (appState.entries[index].active) ...[
