@@ -32,16 +32,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var currentPageIndex = 1;
+  var currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     Widget page;
     switch (currentPageIndex) {
       case 0:
-        page = Card(child: Text('Stopwatches'));
-      case 1:
         page = TimersPage();
+      case 1:
+        page = Card(child: Text('Stopwatches'));
       default:
         throw UnimplementedError('no widget for $currentPageIndex');
     }
@@ -56,12 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         destinations: const <Widget>[
           NavigationDestination(
-            icon: Icon(Icons.access_alarm),
-            label: 'Stopwatches'
-          ),
-          NavigationDestination(
             icon: Icon(Icons.av_timer), 
             label: 'Timers'
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.access_alarm),
+            label: 'Stopwatches'
           )
         ],
       ),
