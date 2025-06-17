@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:more_timers_app/logic/app_state.dart';
+import 'package:more_timers_app/presentation/list_wheel/time_selection_dialog.dart';
 import 'package:provider/provider.dart';
 
 class TimersPage extends StatelessWidget {
@@ -71,8 +72,10 @@ class TimersPage extends StatelessWidget {
           return Center(
             child: IconButton(
               onPressed: () {
-                appState.addTimer(Duration(seconds: 5));
-                myController.jumpTo(myController.position.maxScrollExtent);
+                showDialog(
+                  context: context,
+                  builder: (context) => TimeSelectionDialog()
+                );
               },
               icon: Icon(Icons.add_circle),
             ),
